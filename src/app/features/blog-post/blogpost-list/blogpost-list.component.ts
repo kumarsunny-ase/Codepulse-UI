@@ -17,6 +17,7 @@ constructor(private blogPostApi : BlogPostService){
 
   ngOnInit(): void {
     this.blogPosts$ = this.blogPostApi.getAllBlogPosts();
+    console.log(this.blogPosts$)
   }
 
 }

@@ -7,29 +7,45 @@ import { environment } from 'src/environments/environment';
 import { updateBlogPost } from '../models/update-blog-post.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BlogPostService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  createBlogPost(data: AddBlogPost) : Observable<BlogPost> {
-    return this.http.post<BlogPost>(`${environment.apiBaseUrl}/api/blogpost`, data);
+  createBlogPost(data: AddBlogPost): Observable<BlogPost> {
+    return this.http.post<BlogPost>(
+      `${environment.apiBaseUrl}/api/blogpost?addAuth=true`,
+      data
+    );
   }
 
-  getAllBlogPosts() : Observable<BlogPost[]> {
-   return this.http.get<BlogPost[]>(`${environment.apiBaseUrl}/api/blogpost`);
+  getAllBlogPosts(): Observable<BlogPost[]> {
+    return this.http.get<BlogPost[]>(`${environment.apiBaseUrl}/api/blogpost`);
   }
 
   getBlogPostById(id: string): Observable<BlogPost> {
-    return this.http.get<BlogPost>(`${environment.apiBaseUrl}/api/blogpost/${id}`);
-  } 
-
-  updateBlogPost(id:string, updatedBlogPost: updateBlogPost): Observable<BlogPost> {
-    return this.http.put<BlogPost>(`${environment.apiBaseUrl}/api/blogpost/${id}`, updatedBlogPost);
+    return this.http.get<BlogPost>(
+      `${environment.apiBaseUrl}/api/blogpost/${id}`
+    );
+  }
+  getBlogPostByurlHandle(urlHandle: string): Observable<BlogPost> {
+    return this.http.get<BlogPost>(
+      `${environment.apiBaseUrl}/api/blogpost/${urlHandle}`
+    );
+  }
+  updateBlogPost(
+    id: string,
+    updatedBlogPost: updateBlogPost
+  ): Observable<BlogPost> {
+    return this.http.put<BlogPost>(
+      `${environment.apiBaseUrl}/api/blogpost/${id}?addAuth=true`,
+      updatedBlogPost
+    );
   }
 
   DeleteBlogPost(id: string): Observable<BlogPost> {
-    return this.http.delete<BlogPost>(`${environment.apiBaseUrl}/api/blogpost/${id}`);
+    return this.http.delete<BlogPost>(
+      `${environment.apiBaseUrl}/api/blogpost/${id}?addAuth=true`
+    );
   }
 }
